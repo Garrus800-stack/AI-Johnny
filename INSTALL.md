@@ -40,8 +40,8 @@ ollama pull gemma2:9b           # Standard-Modell (5GB)
 
 # ── 3. Johnny installieren ──────────────────────────────────────
 # ZIP entpacken oder Git Clone:
-git clone https://github.com/user/johnny-ai-assistant.git
-cd johnny-ai-assistant
+git clone https://github.com/Garrus800-stack/AI-Johnny.git
+cd AI-Johnny
 
 npm install
 
@@ -98,8 +98,8 @@ ollama serve &
 ollama pull gemma2:9b
 
 # ── 3. Johnny installieren ──────────────────────────────────────
-git clone https://github.com/user/johnny-ai-assistant.git
-cd johnny-ai-assistant
+git clone https://github.com/Garrus800-stack/AI-Johnny.git
+cd AI-Johnny
 
 npm install
 
@@ -149,8 +149,8 @@ ollama serve &
 ollama pull gemma2:9b
 
 # Johnny
-git clone https://github.com/user/johnny-ai-assistant.git
-cd johnny-ai-assistant
+git clone https://github.com/Garrus800-stack/AI-Johnny.git
+cd AI-Johnny
 npm install
 npm start
 ```
