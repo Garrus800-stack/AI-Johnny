@@ -125,3 +125,10 @@ npm run build                  # Windows EXE
 ## Lizenz
 
 MIT — Nutzung auf eigene Verantwortung.
+
+
+
+git clone https://github.com/Garrus800-stack/AI-Johnny.git
+cd AI-Johnny
+npm install
+npm start
