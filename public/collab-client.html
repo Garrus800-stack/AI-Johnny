@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Johnny AI – Collaboration</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d0d0d;color:#e0e0e0;height:100vh;display:flex;flex-direction:column}#header{background:#111;border-bottom:1px solid #222;padding:10px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}#header h1{font-size:18px;font-weight:700;color:#3dd6ac}#status{font-size:12px;padding:3px 10px;border-radius:20px;background:#1a1a1a;border:1px solid #333}.online{color:#3dd6ac!important;border-color:#3dd6ac!important}.offline{color:#e74c3c!important;border-color:#e74c3c!important}#body{display:flex;flex:1;overflow:hidden}#sidebar{width:220px;background:#111;border-right:1px solid #222;display:flex;flex-direction:column;flex-shrink:0}#sidebar h3{padding:12px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#666}.room-item{padding:9px 14px;cursor:pointer;font-size:13px;border-left:3px solid transparent}.room-item:hover{background:#1a1a1a}.room-item.active{border-left-color:#3dd6ac;background:#1a2a23;color:#3dd6ac}.room-item .members{font-size:11px;color:#666}#new-room-input{width:calc(100% - 28px);margin:10px 14px;background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:6px 10px;color:#e0e0e0;font-size:13px}#users-panel{padding:8px 14px;border-top:1px solid #222;margin-top:auto}.user-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;flex-shrink:0}.user-item{font-size:12px;padding:3px 0;display:flex;align-items:center}#main{flex:1;display:flex;flex-direction:column;overflow:hidden}#tabs{display:flex;background:#111;border-bottom:1px solid #222;flex-shrink:0}.tab{padding:10px 18px;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;color:#888}.tab.active{color:#3dd6ac;border-bottom-color:#3dd6ac}.tab-content{flex:1;display:none;flex-direction:column;overflow:hidden}.tab-content.active{display:flex}#messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:6px}.msg{padding:8px 12px;border-radius:8px;background:#1a1a1a;max-width:85%;word-break:break-word}.msg .meta{font-size:11px;margin-bottom:3px;display:flex;gap:8px;align-items:center}.msg .name{font-weight:600}.msg .time{color:#555}.msg.agent-msg{background:#1a2a23;border-left:3px solid #3dd6ac}.msg.agent-msg .name{color:#3dd6ac}.msg .text{font-size:14px;line-height:1.5}.reactions-bar{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}.rb{background:#252525;border:1px solid #333;border-radius:20px;padding:2px 8px;font-size:12px;cursor:pointer}.rb:hover{background:#303030}.rb.mine{border-color:#3dd6ac;color:#3dd6ac}#typing-indicator{padding:4px 14px;font-size:12px;color:#3dd6ac;min-height:22px;flex-shrink:0}#chat-input-area{padding:10px 14px;border-top:1px solid #222;display:flex;gap:8px;flex-shrink:0}#chat-input{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:9px 12px;color:#e0e0e0;font-size:14px;resize:none;font-family:inherit}#chat-input:focus{outline:none;border-color:#3dd6ac}.send-btn{background:#3dd6ac;color:#000;border:none;border-radius:8px;padding:9px 18px;font-weight:700;cursor:pointer;font-size:14px;flex-shrink:0}.send-btn:hover{background:#45e8be}#notes-area,#code-area,#kanban-area{flex:1;padding:14px;display:flex;flex-direction:column;gap:8px}#notes-editor,#code-editor{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:12px;color:#e0e0e0;font-size:14px;resize:none;line-height:1.6}#code-editor{font-family:'JetBrains Mono','Fira Code',monospace;font-size:13px;background:#0d0d0d;tab-size:2}#notes-editor:focus,#code-editor:focus{outline:none;border-color:#3dd6ac}.code-toolbar{display:flex;gap:8px;align-items:center;flex-shrink:0}.code-toolbar select{background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:5px 10px;border-radius:6px;font-size:13px}#kanban-board{display:flex;gap:12px;overflow-x:auto;flex:1}.kanban-col{min-width:220px;background:#111;border:1px solid #222;border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;min-height:200px}.kanban-col-header{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:4px}.kanban-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px;cursor:grab;font-size:13px;border-left:3px solid #3dd6ac}.kanban-card:hover{background:#222}.kanban-card .card-title{font-weight:600;margin-bottom:4px}.kanban-card .card-meta{font-size:11px;color:#555;margin-top:4px}.kanban-toolbar{display:flex;gap:8px;flex-shrink:0}.kanban-toolbar input{background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:6px 10px;color:#e0e0e0;font-size:13px;flex:1}.btn{background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px}.btn:hover{background:#252525}.btn-p{background:#3dd6ac;color:#000;border-color:#3dd6ac;font-weight:700}.btn-p:hover{background:#45e8be}#join-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:100}#join-box{background:#111;border:1px solid #333;border-radius:14px;padding:30px;width:360px;display:flex;flex-direction:column;gap:14px}#join-box h2{color:#3dd6ac;font-size:20px}#join-box input{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:14px;width:100%}#join-box input:focus{outline:none;border-color:#3dd6ac}.sys-msg{font-size:12px;color:#555;padding:3px 0;text-align:center}</style></head><body>
+<div id="header"><h1>🤖 Johnny AI Collaboration</h1><span id="status" class="offline">Verbinde...</span><span style="margin-left:auto;font-size:12px;color:#555">@Johnny Frage stellen | Dateien per Drag&amp;Drop</span></div>
+<div id="body">
+  <div id="sidebar">
+    <h3>Räume</h3>
+    <div id="room-list"></div>
+    <input id="new-room-input" placeholder="+ Neuer Raum (Enter)" />
+    <div id="users-panel"><h3 style="padding:0;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#666">Online</h3><div id="online-users"></div></div>
+  </div>
+  <div id="main">
+    <div id="tabs">
+      <div class="tab active" onclick="switchTab('chat')">💬 Chat</div>
+      <div class="tab" onclick="switchTab('notes')">📝 Notizen</div>
+      <div class="tab" onclick="switchTab('code')">💻 Code</div>
+      <div class="tab" onclick="switchTab('kanban')">📋 Kanban</div>
+    </div>
+    <div id="tab-chat" class="tab-content active"><div id="messages"></div><div id="typing-indicator"></div><div id="chat-input-area"><textarea id="chat-input" placeholder="Nachricht... (@Johnny Frage für AI)" rows="1"></textarea><button class="send-btn" onclick="sendChat()">Senden</button></div></div>
+    <div id="tab-notes" class="tab-content"><div id="notes-area"><div style="display:flex;gap:8px;align-items:center"><span style="font-weight:600;font-size:15px">📝 Geteilte Notizen</span><span id="notes-info" style="font-size:12px;color:#555">Live geteilt</span></div><textarea id="notes-editor" placeholder="Markdown-Notizen... Alle sehen Änderungen live."></textarea></div></div>
+    <div id="tab-code" class="tab-content"><div id="code-area"><div class="code-toolbar"><span style="font-weight:600;font-size:15px">💻 Code</span><select id="code-lang" onchange="syncCode()"><option value="javascript">JavaScript</option><option value="python">Python</option><option value="bash">Bash</option><option value="html">HTML</option><option value="css">CSS</option><option value="json">JSON</option><option value="typescript">TypeScript</option></select><button class="btn" onclick="copyCode()">📋 Kopieren</button><span id="code-version" style="font-size:12px;color:#555">v0</span></div><textarea id="code-editor" placeholder="// Kollaborativer Code-Editor\n// Änderungen werden live geteilt"></textarea></div></div>
+    <div id="tab-kanban" class="tab-content"><div id="kanban-area"><div class="kanban-toolbar"><input id="card-title" placeholder="Neue Karte..." /><input id="card-assignee" placeholder="Zugewiesen an..." style="max-width:140px" /><button class="btn btn-p" onclick="addCard()">+ Karte</button><input id="col-name" placeholder="+ Spalte" style="max-width:110px" /><button class="btn" onclick="addColumn()">+ Spalte</button></div><div id="kanban-board"></div></div></div>
+  </div>
+</div>
+<div id="join-overlay">
+  <div id="join-box"><h2>🤖 Johnny Collaboration</h2><input id="j-name" placeholder="Dein Name" value="User" /><input id="j-room" placeholder="Raum-ID (leer = general)" /><input id="j-pass" type="password" placeholder="Passwort (falls nötig)" /><button class="btn btn-p" onclick="joinServer()">Beitreten</button></div>
+</div>
+<script>
+let ws,myName='',myColor='#3dd6ac',currentRoom='general',pendingTyping=false,typingTimer=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const escHTML=s=>esc(s).replace(/\n/g,'<br>');
+const fmt=b=>b>1048576?(b/1048576).toFixed(1)+' MB':b>1024?(b/1024).toFixed(0)+' KB':b+' B';
+const EMOJIS=['👍','❤️','😂','🔥','✅','💡'];
+
+function joinServer(){
+  myName=$('j-name').value.trim()||'User';
+  const roomId=$('j-room').value.trim()||'general';
+  const pass=$('j-pass').value;
+  $('join-overlay').style.display='none';
+  currentRoom=roomId;
+  const proto=location.protocol==='https:'?'wss':'ws';
+  ws=new WebSocket(proto+'://'+location.host);
+  ws.onopen=()=>{
+    $('status').className='online';$('status').textContent='Online ✓';
+    ws.send(JSON.stringify({type:'join',name:myName,roomId,password:pass}));
+    ws.send(JSON.stringify({type:'list_rooms'}));
+  };
+  ws.onmessage=e=>handleMsg(JSON.parse(e.data));
+  ws.onclose=()=>{$('status').className='offline';$('status').textContent='Getrennt';};
+  ws.onerror=()=>{$('status').className='offline';$('status').textContent='Fehler';};
+}
+
+function handleMsg(m){
+  switch(m.type){
+    case 'history':
+      $('messages').innerHTML='';
+      (m.messages||[]).forEach(addMsgUI);
+      if(m.notes)$('notes-editor').value=m.notes;
+      if(m.code){$('code-editor').value=m.code;}
+      if(m.codeLang)$('code-lang').value=m.codeLang;
+      if(m.codeVersion){$('code-version').textContent='v'+m.codeVersion;}
+      if(m.kanban)renderKanban(m.kanban);
+      break;
+    case 'chat':case 'agent':case 'file':case 'poll': addMsgUI(m); break;
+    case 'agent_thinking': sysMsg('⏳ '+m.agent+' denkt nach...'); break;
+    case 'agent_error': sysMsg('❌ '+m.agent+': '+m.error); break;
+    case 'error': sysMsg('❌ '+m.message); break;
+    case 'presence': sysMsg(m.action==='join'?'👋 '+m.name+' ist beigetreten':'👋 '+m.name+' hat verlassen'); break;
+    case 'presence_list':
+      $('online-users').innerHTML=(m.users||[]).map(u=>'<div class="user-item"><span class="user-dot" style="background:'+esc(u.color||'#666')+'"></span>'+esc(u.name)+'</div>').join('');
+      break;
+    case 'typing': $('typing-indicator').textContent=m.from+' tippt...'; break;
+    case 'typing_stop': if($('typing-indicator').textContent.startsWith(m.from))$('typing-indicator').textContent=''; break;
+    case 'note': if($('notes-editor').value!==m.content)$('notes-editor').value=m.content; $('notes-info').textContent='Zuletzt: '+m.from; break;
+    case 'code_full': $('code-editor').value=m.code; $('code-version').textContent='v'+(m.version||0); if(m.lang)$('code-lang').value=m.lang; break;
+    case 'kanban_update': renderKanban(m.kanban); break;
+    case 'reaction_update':{
+      const rb=document.querySelector('[data-mid="'+m.messageId+'"] .reactions-bar');
+      if(rb)rb.innerHTML=buildReactions(m.messageId,m.reactions);
+      break;}
+    case 'room_list': renderRoomList(m.rooms); break;
+    case 'joined': currentRoom=m.roomId; document.querySelectorAll('.room-item').forEach(el=>el.classList.toggle('active',el.dataset.id===m.roomId)); break;
+    case 'file_data':{const a=document.createElement('a');a.href='data:application/octet-stream;base64,'+m.data;a.download=m.name;a.click();break;}
+    case 'poll_update':{
+      const pd=document.querySelector('[data-pollid="'+m.pollId+'"]');
+      if(pd)pd.innerHTML=m.options.map((o,i)=>'<div style="margin:4px 0"><button class="btn" style="font-size:12px;padding:4px 10px" onclick="vote(\''+esc(m.pollId)+'\','+i+')">'+esc(o.label)+'</button> <span style="color:#666;font-size:12px">'+o.votes.length+'</span></div>').join('');
+      break;}
+  }
+}
+
+function buildReactions(msgId,reactions){
+  if(!reactions||!msgId)return '';
+  return Object.entries(reactions).filter(([,v])=>v.length>0).map(([emoji,users])=>
+    '<span class="rb'+(users.includes(myName)?' mine':'')+'" onclick="react(\''+esc(msgId)+"',\\'"+emoji+"\\')\">"
+    +emoji+' '+users.length+'</span>'
+  ).join('');
+}
+
+function addMsgUI(m){
+  const div=document.createElement('div');
+  div.className='msg'+(m.type==='agent'||m.isAgent?' agent-msg':'');
+  div.dataset.mid=m.id||'';
+  const t=m.ts?new Date(m.ts).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}):'';
+  if(m.type==='chat'||m.type==='agent'){
+    div.innerHTML='<div class="meta"><span class="name" style="color:'+esc(m.color||'#3dd6ac')+'">'+esc(m.from)+'</span><span class="time">'+t+'</span></div>'+
+    '<div class="text">'+escHTML(m.text)+'</div>'+
+    '<div class="reactions-bar">'+buildReactions(m.id,m.reactions)+
+    EMOJIS.map(e=>'<span class="rb" onclick="react(\''+esc(m.id||'')+'\',\''+e+'\')">'+e+'</span>').join('')+'</div>';
+  } else if(m.type==='file'){
+    div.innerHTML='<div class="meta"><span class="name" style="color:'+esc(m.color||'#888')+'">'+esc(m.from)+'</span><span class="time">'+t+'</span></div>'+
+    '<div class="text">📎 <a href="#" onclick="dlFile(\''+esc(m.fileId||'')+'\');return false" style="color:#3dd6ac">'+esc(m.fileName)+'</a> ('+fmt(m.fileSize||0)+')</div>';
+  } else if(m.type==='poll'&&m.poll){
+    div.innerHTML='<div class="meta"><span class="name" style="color:#f39c12">📊 Umfrage</span><span class="time">'+t+'</span></div>'+
+    '<div style="font-weight:600;margin-bottom:6px">'+escHTML(m.poll.question)+'</div>'+
+    '<div data-pollid="'+esc(m.poll.id||'')+'">'+m.poll.options.map((o,i)=>
+      '<div style="margin:4px 0"><button class="btn" style="font-size:12px;padding:4px 10px" onclick="vote(\''+esc(m.poll.id||'')+'\','+i+')">'+esc(o.label)+'</button> <span style="color:#666;font-size:12px">'+o.votes.length+'</span></div>'
+    ).join('')+'</div>';
+  }
+  $('messages').appendChild(div);
+  $('messages').scrollTop=$('messages').scrollHeight;
+}
+
+function sysMsg(text){const d=document.createElement('div');d.className='sys-msg';d.textContent=text;$('messages').appendChild(d);$('messages').scrollTop=$('messages').scrollHeight;}
+
+function renderRoomList(rooms){
+  $('room-list').innerHTML=(rooms||[]).map(r=>
+    '<div class="room-item'+(r.id===currentRoom?' active':'')+'" data-id="'+esc(r.id)+'" onclick="switchRoom(\''+esc(r.id)+'\',\''+esc(r.name)+'\')">'+esc(r.name)+'<div class="members">'+r.members+' online</div></div>'
+  ).join('');
+}
+
+function switchRoom(id){currentRoom=id;ws.send(JSON.stringify({type:'join',name:myName,roomId:id}));}
+function sendChat(){const inp=$('chat-input'),text=inp.value.trim();if(!text||!ws)return;ws.send(JSON.stringify({type:'chat',roomId:currentRoom,text}));inp.value='';inp.style.height='';}
+function react(msgId,emoji){ws.send(JSON.stringify({type:'react',roomId:currentRoom,messageId:msgId,emoji}));}
+function vote(pollId,idx){ws.send(JSON.stringify({type:'poll_vote',roomId:currentRoom,pollId,optionIndex:idx}));}
+function dlFile(fileId){ws.send(JSON.stringify({type:'file_download',fileId}));}
+
+$('notes-editor').addEventListener('input',function(){clearTimeout(window._nt);window._nt=setTimeout(()=>ws&&ws.send(JSON.stringify({type:'note',roomId:currentRoom,content:this.value})),400);});
+
+let codeTimer=null;
+$('code-editor').addEventListener('input',function(){clearTimeout(codeTimer);codeTimer=setTimeout(()=>{ws&&ws.send(JSON.stringify({type:'code_full',roomId:currentRoom,code:this.value,lang:$('code-lang').value}));},350);});
+$('code-editor').addEventListener('keydown',function(e){if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart,v=this.value;this.value=v.slice(0,s)+'  '+v.slice(this.selectionEnd);this.selectionStart=this.selectionEnd=s+2;}});
+function syncCode(){ws&&ws.send(JSON.stringify({type:'code_full',roomId:currentRoom,code:$('code-editor').value,lang:$('code-lang').value}));}
+function copyCode(){navigator.clipboard.writeText($('code-editor').value).then(()=>{const b=event.target;b.textContent='✓ Kopiert!';setTimeout(()=>b.textContent='📋 Kopieren',1500);});}
+
+function renderKanban(k){
+  if(!k)return;
+  $('kanban-board').innerHTML=k.columns.map(col=>{
+    const cards=(k.cards||[]).filter(c=>c.column===col);
+    return '<div class="kanban-col" ondragover="event.preventDefault()" ondrop="dropCard(event,\''+esc(col)+'\')">'+
+      '<div class="kanban-col-header">'+esc(col)+' <span style="color:#3dd6ac">'+cards.length+'</span></div>'+
+      cards.map(c=>'<div class="kanban-card" draggable="true" ondragstart="dragStart(event,\''+esc(c.id)+'\')" style="border-left-color:'+esc(c.color||'#3dd6ac')+'">'+
+        '<div class="card-title">'+escHTML(c.title)+'</div>'+
+        (c.desc?'<div style="font-size:12px;color:#888;margin-top:2px">'+escHTML(c.desc)+'</div>':'')+
+        '<div class="card-meta">'+(c.assignee?'👤 '+esc(c.assignee)+' ':'')+(c.comments.length?'💬'+c.comments.length:'')+'<span onclick="delCard(\''+esc(c.id)+'\')" style="float:right;cursor:pointer;color:#e74c3c">✕</span></div>'+
+      '</div>'
+      ).join('')+
+    '</div>';
+  }).join('');
+}
+let dragId=null;
+function dragStart(e,id){dragId=id;}
+function dropCard(e,col){if(dragId){ws.send(JSON.stringify({type:'kanban_move',roomId:currentRoom,cardId:dragId,column:col}));dragId=null;}}
+function addCard(){const t=$('card-title').value.trim();if(!t)return;ws.send(JSON.stringify({type:'kanban_add',roomId:currentRoom,title:t,assignee:$('card-assignee').value.trim()}));$('card-title').value='';}
+function delCard(id){ws.send(JSON.stringify({type:'kanban_delete',roomId:currentRoom,cardId:id}));}
+function addColumn(){const n=$('col-name').value.trim();if(!n)return;ws.send(JSON.stringify({type:'kanban_add_column',roomId:currentRoom,column:n}));$('col-name').value='';}
+
+$('new-room-input').addEventListener('keypress',function(e){if(e.key==='Enter'&&this.value.trim()){ws.send(JSON.stringify({type:'create_room',roomName:this.value.trim()}));this.value='';}});
+$('chat-input').addEventListener('input',function(){if(!pendingTyping){pendingTyping=true;ws&&ws.send(JSON.stringify({type:'typing',roomId:currentRoom}));}clearTimeout(typingTimer);typingTimer=setTimeout(()=>{pendingTyping=false;},2500);this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';});
+$('chat-input').addEventListener('keypress',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
+
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>{
+  e.preventDefault();
+  const file=e.dataTransfer.files[0];
+  if(!file)return;
+  const r=new FileReader();
+  r.onload=ev=>{ws.send(JSON.stringify({type:'file_upload',roomId:currentRoom,name:file.name,data:btoa(ev.target.result)}));};
+  r.readAsBinaryString(file);
+});
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['chat','notes','code','kanban'][i]===t));
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.toggle('active',el.id==='tab-'+t));
+}
+</script></body></html>
